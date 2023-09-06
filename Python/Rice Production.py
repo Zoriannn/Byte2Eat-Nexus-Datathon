@@ -27,6 +27,22 @@ y_data = df.loc[start_row:end_row, y_column]
 plt.plot(x_data, y_data, marker='o', linestyle='-')
 
 
+# Calculate the interquartile range (IQR) for the 'Value' column
+Q1 = y_data.quantile(0.25)
+Q3 = y_data.quantile(0.75)
+IQR = Q3 - Q1
+
+# Define a threshold for outliers (e.g., 1.5 times the IQR)
+outlier_threshold = 1.5 * IQR
+
+# Detect outliers
+outliers = y_data[(y_data < (Q1 - outlier_threshold)) | (y_data > (Q3 + outlier_threshold))]
+
+# Print the outliers
+print("Outliers:")
+print(outliers)
+
+
 # Add labels and a title
 plt.xlabel(x_column)
 plt.ylabel('Tons')
